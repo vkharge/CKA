@@ -9,17 +9,25 @@ In this section, we will take a look at kube-controller-manager.
 
 ## Node Controller
    - Responsible for monitoring the state of the Nodes and taking necessary actions to keep the application running. 
-  
+     It does that through the kube-apiserver
+     
+     Node Controller checks the status of the node every 5 sec [Node Monitor Period = 5], in this node controller monitor the health of the nodes
+     i.e Node Controller sends a request to kube-apiserver and kube-apiserver sends the request to kubelet on the worker
+         kubelet sends the status of the node to the kube-apiserver and kube-apiserver sends back the status to node controller
+     
+     If the node-controller stops receiving the heartbeats from the nodes than the node is marked as unreachable but it waits for 40 sec before marking the node as unreachable [Node Monitor Grace Period = 40s]. After a node is marked as unreachabe, it gives 5 mins to come back up [POD Eviction Timeout = 5m]. if it doesn't, it removes the PODs assigned to that nodes and provisions them on healthly nodes if the PODs are part of replicasets.
+     
    ![node-controller](../../images/node-controller.PNG)
    
 ## Replication Controller
    - It is responsible for monitoring the status of replicasets and ensuring that the desired number of pods are available at all time within the set.
+      If a POD dies, it will create a new POD
    
    ![replication-controller](../../images/replication-controller.PNG)
    
 ## Other Controllers
    - There are many more such controllers available within kubernetes
-     
+     All these controllers are packaged as a single process called as kube-controller-manager and when you install the kube-controller-manager different controllers get installed as well. 
    ![other-controllers](../../images/other-controllers.PNG)
    
    
@@ -29,7 +37,15 @@ In this section, we will take a look at kube-controller-manager.
     ```
     $ wget https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/linux/amd64/kube-controller-manager
     ```
+    Extract it and run it as service
+    
   - By default all controllers are enabled, but you can choose to enable specific one from **`kube-controller-manager.service`**
+    This is the file in which you provide additional options to customize the controllers such as you want to change te default values of below:
+    --node-monitor-period=5s
+    --node-monitor-grace-period=40s
+    --pod-eviction-timeout=5m0s
+    
+    There is an additional option --controllers where you can define which controllers you want to enable, bydefault all of them are enable.
     ```
     $ cat /etc/systemd/system/kube-controller-manager.service
     ```
