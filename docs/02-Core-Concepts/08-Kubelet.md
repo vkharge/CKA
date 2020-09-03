@@ -8,12 +8,15 @@ In this section we will take a look at kubelet.
   Kubelet responsibility:
   
     . Register Node
+    
        The kubelet in the kubernetes worker node, registers the node with the kubernetes cluster. 
        
     . Create PODS
+    
         When kubeket receives instructions to load a container or a POD on the node, it requests the container run time engine, which may be Docker, to pull the required image and run an instance. 
   
      . Monitor PODS and Nodes
+     
         The kubelet continues to monitor the state of the POD and the containers in it and reports to the kube-api server on a timely basis.
 
   ![kubelet](../../images/kubelet.PNG)
