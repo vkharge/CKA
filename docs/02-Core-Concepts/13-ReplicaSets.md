@@ -183,6 +183,20 @@ They are the processes that monitor kubernetes objects and respond accordingly.
   ```
   ![rs2](../../images/rs2.PNG)
 
+## Update image name in replicaset config
+
+  - Conside a case where we have already replicaset created, but the image name is incorrect, so the PODS will not be in READY State. We need to fix this issue by changing the image name.
+ ```
+  kubectl edit replicaset <name>
+  ** Change the image name
+
+
+  kubectl get replicasets
+
+  kubectl get pods
+ ```
+  ** Still I can see the OLD PODS and are not in READY state. We need to manually delete all the PODS so that RS will create new PODS. Job of replicaset is only to maintain desired state and it helps to scale but not to update any container parameters at runtime. Deployment will help for this.
+
 #### K8s Reference Docs:
 - https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
 - https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/
