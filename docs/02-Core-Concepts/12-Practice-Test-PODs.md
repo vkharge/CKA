@@ -15,6 +15,7 @@
 
    ```
    $ kubectl run nginx --image=nginx
+   ** From K8s 1.18, this command will create a pod, in the previous version it used to create a deployment.
    ```
    </details>
 
