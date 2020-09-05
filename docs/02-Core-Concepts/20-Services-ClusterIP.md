@@ -5,11 +5,18 @@ In this section we will take a look at **`services - ClusterIP`** in kubernetes
          
 ## ClusterIP
 - In this case the service creates a **`Virtual IP`** inside the cluster to enable communication between different services such as a set of frontend servers to a set of backend servers.
+
     
     ![srvc1](../../images/srvc1.PNG)
     
 #### What is a right way to establish connectivity between these services or tiers  
 - A kubernetes service can help us group the pods together and provide a single interface to access the pod in a group.
+
+- This enables us to easily and effectively deploy a microservices based application on kubernetes cluster.
+
+- Each layer can now scale or move as required without impacting communication between the various services. 
+
+- Each service gets an name and IP address assigned to it inside the cluster and that is the name that should be used by other pods to access the service.
 
   ![srvc2](../../images/srvc2.PNG)
   
