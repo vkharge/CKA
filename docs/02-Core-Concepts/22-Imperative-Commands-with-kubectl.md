@@ -92,3 +92,107 @@ https://kubernetes.io/docs/reference/kubectl/conventions/
 	  If you need to specify a node port, generate a definition file using the same command and manually input the nodeport before creating the service.
 
 	```
+	
+
+# Anslysis Done for the commands
+
+- kubectl run ws --image=nginx
+   ```	
+	POD Details:
+		Pod name: ws
+		Pod Labels: run=ws
+
+		Container Name: ws
+   ```	
+
+- kubectl create deployment ws --image=nginx
+  ```
+	Deployment Name: ws
+	Deployment Labels: app=ws
+	Selectors: app=ws
+
+	ReplicaSet Name: ws-xxxxx
+	ReplicaSet Labels: app=ws
+	Selectors: app=ws
+	No of Replicas: 1
+
+	Pod Name: ws-xxxxx-yyyyy
+	Pod Labels: app=ws
+
+	Container Name: nginx
+	Container Image: nginx
+   ```
+
+
+
+- kubectl create service clusterip NAME [--tcp=<port>:<targetPort>] [--dry-run=server|client|none] [options]
+  ```
+    Available Commands:
+    clusterip    Create a ClusterIP service.
+    externalname Create an ExternalName service.
+    loadbalancer Create a LoadBalancer service.
+    nodeport     Create a NodePort service.
+  ```
+
+
+- kubectl create service clusterip ws --tcp=5000:80
+   ```
+	Service Name: ws
+	Service Labels: app=ws
+
+	Selectors: app=ws
+	port: 5000
+	targetPort: 80
+   ```
+
+- kubectl create service nodeport web --node-port=30005  --tcp=5000:80
+  ```
+	Service Name: web
+	Service Labels: app=web
+
+	Selectors: app=web
+	nodePort: 30005
+	port: 5000
+	targetPort: 80
+   ```
+
+
+
+- kubectl expose --help
+  
+   - Looks up a deployment, service, replica set, replication controller or pod by name and uses the selector for that resource as the selector for a new service on the specified port. A deployment or replica set will be exposed as a service only if its selector is convertible to a selector that service supports, i.e. when the selector contains only the matchLabels component. Note that if no port is specified via --port and the exposed resource has multiple ports, all will be re-used by the new service. Also if no labels are specified, the new service will re-use the labels from the resource it exposes.
+```
+ Possible resources include (case insensitive):
+
+ pod (po), service (svc), replicationcontroller (rc), deployment (deploy), replicaset (rs)
+
+  --type='': Type for this service: ClusterIP, NodePort, LoadBalancer, or ExternalName. Default is 'ClusterIP'.
+
+  kubectl expose rc nginx --port=80 --target-port=8000
+  ```
+
+- kubectl expose deploy ws --type=NodePort --port=8080 --target-port=80 
+  ```
+ 	Service Name: ws
+	Service Labels: **** Label which is set for deployment
+
+	Selectors: **** Label which is set for deployment
+	nodePort: Not Set
+	port: 8080
+	targetPort: 80
+  ```
+
+
+- kubectl expose deploy ws --type=NodePort --port=8080 --target-port=80  --name=ws-svc
+   ```
+ 	** Service Name: ws-svc 
+   ```
+
+
+
+- kubectl expose deploy ws --port=80 --target-port=8000   --selector=type=frontend --type=NodePort
+  ```
+	** selector:
+    	type: frontend
+  ```
+
