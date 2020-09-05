@@ -2,28 +2,28 @@
   - Take me to the [Tutorial](https://kodekloud.com/courses/539883/lectures/10503265)
 
   -
-    ![cmd1](../../images/cmd1.png)
+    ![cmds1](../../images/cmds1.png)
 
   -
-    ![cmd2](../../images/cmd2.png)
+    ![cmds2](../../images/cmds2.png)
 
   -
-    ![cmd3](../../images/cmd3.png)
+    ![cmds3](../../images/cmds3.png)
 
   -
-    ![cmd4](../../images/cmd4.png)
+    ![cmds4](../../images/cmds4.png)
 
   -
-    ![cmd5](../../images/cmd5.png)
+    ![cmds5](../../images/cmds5.png)
 
   -
-    ![cmd6](../../images/cmd6.png)
+    ![cmds6](../../images/cmds6.png)
 
   -
-    ![cmd7](../../images/cmd7.png)
+    ![cmds7](../../images/cmds7.png)
     
  -
-    ![cmd8](../../images/cmd8.png)
+    ![cmds8](../../images/cmds8.png)
 
 
 
