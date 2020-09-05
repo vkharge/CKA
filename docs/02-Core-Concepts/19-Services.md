@@ -4,7 +4,7 @@
 In this section we will take a look at **`services`** in kuberentes
 
 ## Services
-- Kubernetes Services enables communication between various components within an outside of the application.
+- Kubernetes Services enables communication between various components such as group of POD services within and also allows external outside users to access the application. Thus services enable loose coupling between micro services in our application.
 
   ![srv1](../../images/srv1.PNG)
   
@@ -25,12 +25,24 @@ In this section we will take a look at **`services`** in kuberentes
     
  ## Service Types
  
+ - Service is an internal virtual entity/component/server inside the node 
+ - In the cluster it's has its own virtual IP address and port, so that it can communicate within different groups of pods. That IP address is called as Cluster IP of the Service
+ 
  #### There are 3 types of service types in kubernetes
  
    ![srv-types](../../images/srv-types.PNG)
  
  1. NodePort
     - Where the services makes an internal POD accessable on a POD on the NODE.
+    - Three different types of port are involved in NodePort
+     - targetPort: This is the port exposed on the POD/container on which the application is listening
+     - port: This is the port on the service, service will listen on Service/Cluster IP and Port
+     - NodePort: This is the port opened on the Node so that external user can access the apllication through NodeIP:NodePort, the request will then will routed to the service on ServiceIP:Port and then service will forward the traffic to the application running under the POD
+     
+    - Mandaory Ports:
+      ***Only mandatory paramerer under ports is port parameter. If the targetPort is not specified, it will consider targetPort as port and if the NodePort is not specified, a random port is generated and allocated in range from 30000 - 32676
+      
+     
       ```
       apiVersion: v1
       kind: Service
