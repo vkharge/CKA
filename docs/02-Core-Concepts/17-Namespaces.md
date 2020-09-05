@@ -133,7 +133,109 @@ spec:
   $ kubectl create -f compute-quota.yaml
   ```
   ![ns13](../../images/ns13.PNG)
-  
+ 
+## Set Namespace to context ad commands help
+
+
+
+
+ - kubectl config help
+```
+	$ kubectl config --help
+
+	Available Commands:
+
+	  current-context Displays the current-context
+	  delete-context  Delete the specified context from the kubeconfig
+	  get-contexts    Describe one or many contexts
+	  rename-context  Renames a context from the kubeconfig file.
+	  set-context     Sets a context entry in kubeconfig
+	  use-context     Sets the current-context in a kubeconfig file
+	  
+
+	  delete-cluster  Delete the specified cluster from the kubeconfig
+	  get-clusters    Display clusters defined in the kubeconfig
+	  set-cluster     Sets a cluster entry in kubeconfig
+
+
+	  set-credentials Sets a user entry in kubeconfig
+	  set             Sets an individual value in a kubeconfig file
+	  unset           Unsets an individual value in a kubeconfig file
+	  view            Display merged kubeconfig settings or a specified kubeconfig file
+```
+
+- Every context have a cluster associated with it:
+	
+	- To get all contexts in K8s
+	```
+	$ kubectl config get-contexts
+	CURRENT   NAME                          CLUSTER      AUTHINFO           NAMESPACE
+	*         kubernetes-admin@kubernetes   kubernetes   kubernetes-admin
+   ```
+
+	-  To get all custers names
+	```
+	$ kubectl config get-clusters
+	NAME
+	kubernetes
+	```
+
+	-  To get current context name
+	```
+	$ kubectl config current-context
+	kubernetes-admin@kubernetes
+	```	
+
+	- To set a default namespace for a specific context
+	  - Create two namespaces:
+	  ```
+	  $ kubectl get namespaces
+		NAME              STATUS   AGE
+		default           Active   16m
+		kube-node-lease   Active   16m
+		kube-public       Active   16m
+		kube-system       Active   16m
+
+
+	  $ kubectl create namespace test
+	  $ kubectl create namespace dev
+
+	  $ kubectl get namespaces
+		NAME              STATUS   AGE
+		default           Active   17m
+		dev               Active   4s
+		kube-node-lease   Active   17m
+		kube-public       Active   17m
+		kube-system       Active   17m
+		test              Active   12s
+
+
+      $ kubectl config get-contexts
+		CURRENT   NAME                          CLUSTER      AUTHINFO           NAMESPACE
+		*         kubernetes-admin@kubernetes   kubernetes   kubernetes-admin
+
+
+      
+      $ kubectl config set-context kubernetes-admin@kubernetes --namespace=dev
+
+
+      $ kubectl config get-contexts
+		CURRENT   NAME                          CLUSTER      AUTHINFO           NAMESPACE
+		*         kubernetes-admin@kubernetes   kubernetes   kubernetes-admin   dev
+
+
+	  $ kubectl config set-context $(kubectl config current-context) --namespace test
+	  OR
+	  $ kubectl config set-context `kubectl config current-context` --namespace dev
+
+
+      $ kubectl config get-contexts
+		CURRENT   NAME                          CLUSTER      AUTHINFO           NAMESPACE
+		*         kubernetes-admin@kubernetes   kubernetes   kubernetes-admin   test
+	  ``` 
+
+
+
 K8s Reference Docs:
 - https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
 - https://kubernetes.io/docs/tasks/administer-cluster/namespaces-walkthrough/
