@@ -4,6 +4,30 @@
 In this section, we will take a look at **`Namespaces`**
 
 So far in this course we have created **`Objects`** such as **`PODs`**, **`Deployments`** and **`Services`** in our cluster. Whatever we have been doing we have been doing in a **`NAMESPACE`**.
+
+- When the cluster is first set up, kubernetes creates a set of pods and services for its internal purpose such as those required by the networking solution, dns services and etc. To isolate these from the user and to prevent you from accidentally deleting or modifying these services, kubernetes creates them under another namespace created at cluster startup.
+
+- When a K8s cluster is installed/deployed, certain namespaces are created automatically by K8s and those are .:
+  - kube-system [In this namespace different K8s services run]
+  - kube-public [In this namespace different K8s resoucres required for users are run]
+  - default [This is namespace where user can deploy its own custome services]
+  
+-  When you use a kubernetes cluster for enterprise or production purposes you may want to consider the use of namespace as you can create your own namespaces as well.
+
+- Each namespaces has set of polices that defines who can do what. You can also assign quota of resources to each of these named spaces that each namespace is guaranteeda certain amount and does not use more than it's allowed limit.
+
+- To refer a service named 'vdr-svc' in 'dev' namespace:
+  
+  - from its won namespace: directly we can use service name such as 'vdr-svc'
+  
+  - from different namespaces:  'vdr-svc.dev.svc.cluster.local'
+    When a service is created, a dns entry is automatically created in this format
+     - vdr-svc : Name of the service
+     - dev : Name of the namespace
+     - svc : Subdomain for the service
+     - cluster.local : Default domain name of the K8s cluster
+    
+
 - This namespace is the **`default`** namespace in kuberntes. It is automatically created when kubernetes is setup initially.
 
   ![ns](../../images/ns.PNG)
