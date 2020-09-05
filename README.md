@@ -30,6 +30,7 @@ These are notes from the [Certified Kubernetes Administrator Course](https://kod
   - [18-Practice-Test-Namespaces](docs/02-Core-Concepts/18-Practice-Test-Namespaces.md)
   - [19-Services](docs/02-Core-Concepts/19-Services.md)
   - [20-Services-ClusterIP](docs/02-Core-Concepts/20-Services-ClusterIP.md)
+  - [20-Services-LoadBalancer](docs/02-Core-Concepts/20-Services-LoadBalancer.md)
   - [21-Practice-Test-Services](docs/02-Core-Concepts/21-Practice-Test-Services.md)
   - [22-Imperative-Commands-with-kubectl](docs/02-Core-Concepts/22-Imperative-Commands-with-kubectl.md)
   - [23-Practice-Test-Imperative-Commands](docs/02-Core-Concepts/23-Practice-Test-Imperative-Commands.md)
