@@ -35,6 +35,7 @@ These are notes from the [Certified Kubernetes Administrator Course](https://kod
   - [22-Imperative-Commands-with-kubectl](docs/02-Core-Concepts/22-Imperative-Commands-with-kubectl.md)
   - [23-Practice-Test-Imperative-Commands](docs/02-Core-Concepts/23-Practice-Test-Imperative-Commands.md)
   - [24-Attachments](docs/02-Core-Concepts/24-Attachments.md)
+  - [25-Apply](docs/02-Core-Concepts/24-Apply.md)
   
 - [03-Scheduling](docs/03-Scheduling)
 
