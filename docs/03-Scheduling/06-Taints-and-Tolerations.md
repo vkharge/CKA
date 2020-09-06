@@ -30,7 +30,10 @@ In this section, we will take a look at taints and tolerations.
   - **`PreferNoSchedule`**
   - **`NoExecute`** : Existing PODS will be evicted[Killed] on the Node but new PODS with the matching toleration will only be created.
   
-  - Remember taints and toleration are only meant to restrict nodes from accepting certain PODS. When a Node is marked as taint, it can only accept those POD which are has a same toleration set but it does not guarantee that POD with the same toleration will always be placed on that Node. i.e When a toleration is added in POD defination, it does not guaranted that POD will be deployed on the taint Node only.
+- Remember taints and toleration are only meant to restrict nodes from accepting certain PODS. When a Node is marked as taint, it can only accept those POD which are has a same toleration set but it does not guarantee that POD with the same toleration will always be placed on that Node. i.e When a toleration is added in POD defination, it does not guaranted that POD will be deployed on the taint Node only.
+
+- If your requirement is to restrict a POD to certain nodes it is achieved through another concept called Ask node affinity
+
   
   ![tn](../../images/tn.PNG)
   
