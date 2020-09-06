@@ -3,6 +3,8 @@
   
 In this section, we will take a look at taints and tolerations.
 - Pod to node relationship and how you can restrict what pods are placed on what nodes.
+- Taints are set on Node
+- Tolerations are added to PODS
 
 #### Taints and Tolerations are used to set restrictions on what pods can be scheduled on a node. 
 - Pods which are tolerant to the particular taint node will only get scheduled on that node.
@@ -24,9 +26,11 @@ In this section, we will take a look at taints and tolerations.
   
 - The taint effect defines what would happen to the pods if they do not tolerate the taint.
 - There are 3 taint effects
-  - **`NoSchedule`**
+  - **`NoSchedule`** : Existing PODS will continue to run on the Node but new PODS with the matching toleration will only be created.
   - **`PreferNoSchedule`**
-  - **`NoExecute`**
+  - **`NoExecute`** : Existing PODS will be evicted[Killed] on the Node but new PODS with the matching toleration will only be created.
+  
+  - Remember taints and toleration are only meant to restrict nodes from accepting certain PODS. When a Node is marked as taint, it can only accept those POD which are has a same toleration set but it does not guarantee that POD with the same toleration will always be placed on that Node. i.e When a toleration is added in POD defination, it does not guaranted that POD will be deployed on the taint Node only.
   
   ![tn](../../images/tn.PNG)
   
