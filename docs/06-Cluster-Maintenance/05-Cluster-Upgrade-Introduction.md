@@ -141,6 +141,80 @@
   ![kubeu3](../../images/kubeu3.PNG)
   
 
+#### To Check Version
+- To see the cluster version?
+	```
+	# k get nodes --> shows kubelet version
+
+	# kubectl version
+	# kubectl version --short
+	Client Version: v1.15.5
+	Server Version: v1.18.3
+
+	# kubeadm upgrade plan
+	```
+	
+- To know what is the latest version available for upgrade?
+	```
+	# kubeadm upgrade plan
+	```
+
+#### Upgrade Master and Worker Nodes
+
+  - Upgrade Master:
+    ```
+    	# kubeadm upgrade plan
+
+
+	# kubectl drain master
+
+
+	# kubeadm version --short
+	# apt-get install kubeadm=1.18.0-00
+	# kubeadm version --short
+
+
+	# kubectl version --short
+	# kubeadm upgrade apply v1.18.0
+	# kubectl version --short
+	# kubeadm upgrade plan
+
+
+	# kubectl get nodes
+	# apt-get install kubectl=1.18.0-00
+	# systemctl restart kubectl
+	# kubectl get nodes
+
+
+	# kubectl uncordon master
+    ```
+    
+  - Upgrade Worker Node:
+  ```
+  	Master: # kubectl drain node01
+	Master : ssh node01
+
+	Worker: 
+		# kubeadm version --short
+		# apt-get install kubeadm=1.18.0-00
+		# kubeadm version --short
+
+
+		# kubectl version --short
+		# kubeadm upgrade node
+		# kubectl version --short
+
+
+		# apt-get install kubectl=1.18.0-00
+		# systemctl restart kubectl
+
+		# exit
+
+	Master: 
+		# kubectl get nodes
+		# kubectl uncordon node01
+  ```
+
 #### K8s Reference Docs
 - https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/
 - https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-upgrade/
