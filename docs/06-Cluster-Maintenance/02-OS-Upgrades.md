@@ -35,6 +35,14 @@ In this section, we will take a look at os upgrades.
 - You can purposefully **`drain`** the node of all the workloads so that the workloads are moved to other nodes.
   ```
   $ kubectl drain node-1
+  
+  $ kubectl drain node-1 --ignore-daemonsets
+  *** Since it cannot delete the daemonsets managed pod such as funnel , kube-proxy, so we have to ignore the daemonsets
+  
+  $ kubectl drain node-1 --ignore-daemonsets --force
+  *** By default, it will not allow to delete the system pods such as daemonsets and standalone pods running on the Node when the node is being marked for drain.
+  *** Since there are standalone pods too that are not managed by RS, RC, Job, Daemonset, Statefull, use --force option  to delete the pods.
+  *** Once the node is marked drain, the standalone pods will deleted and lost forever
   ```
 - The node is also cordoned or marked as unschedulable.
 - When the node is back online after a maintenance, it is still unschedulable. You then need to uncordorn it.
