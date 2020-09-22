@@ -4,6 +4,7 @@
 
 In this section, we will take a look at **Persistent Volumes**
 
+- volumes are configured within the POD defination file
 - In the large evnironment, with a lot of users deploying a lot of pods, the users would have to configure storage every time for each Pod.
 - Whatever storage solution is used, the users who deploys the pods would have to configure that on all pod definition files in his environment. Every time a change is to be made, the user would have to make them on all of his pods.
 
@@ -26,6 +27,12 @@ In this section, we will take a look at **Persistent Volumes**
     hostPath:
      path: /tmp/data
   ```
+-  access modes : access mode defines how a volume should be mounted on the hosts whether in a read only mode or read write mode etc. 
+   - Supported types: ReadWriteOnce, ReadWriteMany, ReadOnlyMany
+
+- capacity: capacity specify the amount of storage to be reserved for this persistent volume which is set to 1 GB here.
+ 
+- volume type: There are many options one of them is hostPath. It is not recommended to use hostPath in production environment
 
   ```
   $ kubectl create -f pv-definition.yaml
