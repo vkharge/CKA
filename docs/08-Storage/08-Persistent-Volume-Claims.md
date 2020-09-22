@@ -5,13 +5,21 @@
 In this section, we will take a look at **Persistent Volume Claim**
 
 - Now we will create a Persistent Volume Claim to make the storage available to the node.
-- Volumes and Persistent Volume Claim are two separate objects in the Kubernetes namespace.
+- Persistent Volumes and Persistent Volume Claim are two separate objects in the Kubernetes namespace.
+- An Administrator creates a set of Persistent Volumes and a user creates Persistent Volume Claims to use to storage.
 - Once the Persistent Volume Claim created, Kubernetes binds the Persistent Volumes to claim based on the request and properties set on the volume.
 
+- Every Persistent Volume Claims is bound to single Persistent volume, during the binding process Kubernetes tries to find a persistent volume that has sufficient capacity as requested by the claim and any other request properties such as access modes, volume modes, storage class etc. 
+
+- Properties considered while finding the PV: sufficient capacity , access modes, volume modes, storage class, labels
+
+- However if there are multiple possible matches for a single claim and you would like to specifically use a particular volume you could still use labels and selectors to bind to the right volumes.
+
+- There is a one to one relationship between claims and volumes so no other claims can utilize the remaining capacity in the volume.
 
 ![class-17](../../images/class17.PNG)
 
-- If properties not matches or Persistent Volume is not available for the Persistent Volume Claim then it will display the pending state.
+- If properties do not matches or Persistent Volume is not available for the Persistent Volume Claim then it will display the pending state until newer volumes are made available to the cluster, once newer volumes are available the claim would automatically be bound to the newly available volume
 
 ```
 pvc-definition.yaml
