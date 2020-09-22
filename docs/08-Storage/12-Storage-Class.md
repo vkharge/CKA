@@ -8,12 +8,23 @@ In this section, we will take a look at **Storage Class**
 - We created Persistent Volume but before this if we are taking a volume from Cloud providers like GCP, AWS, Azure. We need to first create disk in the Google Cloud as an example. 
 - We need to create manually each time when we define in the Pod definition file. that's called **Static Provisioning**. 
 
+- With Cloud Storages:
+    - First we need to create a disk on the cloud [google]
+	  - Create the PV with the same disk name
+
+		*** Every time an application requires storage, you have to first manually provisioned the desk on Google Cloud and then manually create a persistent volume definition file using the same name as that of the disk that you created. That's called static provisioning volumes.
+
 #### Static Provisioning
 
 ![class-18](../../images/class18.PNG)
 
 
 #### Dynamic Provisioning
+
+- 		It would have been nice if the volume gets provisioned automatically when the application requires it, and that's where storage clauses come in.
+- 		With storage classes, you can define a provisional such as Google storage that can automatically provision storage on Google Cloud and attach that to POD when a claim is made. That's called dynamic provisioning of volumes.
+- So we no longer need the PV definition because the PV and any associated storage is going to be created automatically when the storage class is created.
+- So remember that it still creates a PV. It's just that you don't have to manually create PVC anymore. It's created automatically by the storage class.
 
 ![class-19](../../images/class19.PNG)
 
