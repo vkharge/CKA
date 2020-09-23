@@ -109,6 +109,9 @@ $ ip -n 04acb487a641 addr
     link/ether c6:f3:ca:12:5e:74 brd ff:ff:ff:ff:ff:ff link-netnsid 0
     inet 10.244.0.2/24 scope global eth0
        valid_lft forever preferred_lft forever
+
+** Virtual wire pair is numbered even and odd [ even is connected to container NS and odd is connected to bridge NS]
+
 ```
 
 ## Port Mapping
@@ -167,6 +170,9 @@ $ curl --head http://192.168.10.11:8080
 HTTP/1.1 200 OK
 Server: nginx/1.19.2
 ```
+
+
+- How does the host forward the traffic to container? Using ip tables as shown below: 
 
 - Configuring **iptables nat** rules
 
