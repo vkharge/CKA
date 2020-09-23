@@ -1,9 +1,20 @@
 # Pod Networking
-
+```
+Best Article: https://sookocheff.com/post/kubernetes/understanding-kubernetes-networking-model/
+				  https://www.slideshare.net/SreenivasMakam/deep-dive-into-kubernetes-networking-108505405
+				  http://events17.linuxfoundation.org/sites/events/files/slides/Container%20Networking%20Deep%20Dive.pdf
+```
   - Take me to [Lecture](https://kodekloud.com/courses/certified-kubernetes-administrator-with-practice-tests/lectures/9808293)
 
 In this section, we will take a look at **Pod Networking**
 
+- Our kubernetes cluster is soon going to have a large number of PODs and services running on it.
+
+- How are these PODs addressed, How do they communicate with each other, how do you access the services running on these PODs internally from within the cluster, as well as externally from outside the cluster.
+
+- These are challenges that kubernetes expects you to solve. As of today, Kubernetes does not come with a built-in solution for this. It expects you to implement a networking solution that solves these challenges. However, Kubernetes have laid out, clearly, the requirements for POD networking. 
+
+- So how do you implement a model that solves these requirements. Now there are many networking solutions available out there that does these. But we have already learned about networking concepts, routing, IP Address management, namespaces and CNI. So let's try to use that knowledge to solve this problem by ourselves first. This will help in understanding how other solutions work.
 
 - To add bridge network on each node
 
@@ -95,14 +106,32 @@ $ ip route add 10.244.2.2 via 192.168.1.12
 
 ![net-12](../../images/net12.PNG)
 
+### Networking Model
+![pod](../../images/pod.png)
 
 ## Container Network Interface
 
 ![net-13](../../images/net13.PNG)
 
+- The kubelet on each node is responsible for creating containers. Whenever a container is created, the kubelet looks at the CNI configuration passed as a command line argument when it was run, and identifies our scripts name it then looks in the CNI bin directory to find our script and then executes the script with the add command and the name and namespace ID of the container. And then our scripts takes care of the rest.
 
 
+```
+				Kubelet
+				  |
+				  |
+				  v
+			--cni-conf-dir=/etc/cni/net.d
+				  |
+				  |
+				  v
+			--cni-bin-dir=/opt/cni/bin
+				  |
+				  |
+				  v
+			./net-script.sh  add  <container>  <ns>
 
+```
 
 
 #### References Docs
