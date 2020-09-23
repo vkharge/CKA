@@ -10,9 +10,9 @@ In this section, we will take a look at **Pre-requisite Container Network Interf
 
 - So we created a program or a script that performs all the required tasks to get the container attached to a bridge network.
 
-![cni1](../../images/cni1.PNG)
+![cni1](../../images/cni1.png)
 
-![cni2](../../images/cni2.PNG)
+![cni2](../../images/cni2.png)
 
 - For example you could run this program using its name bridge and specify that you want to add this container to a particular network namespace. The bridge program takes care of the rest so that the container runtime environments are relieved of those tasks.
 
