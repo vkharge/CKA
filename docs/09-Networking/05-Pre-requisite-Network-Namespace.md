@@ -231,11 +231,13 @@ $ ping 192.168.15.1
 
 > On the ns
 ```
+# How can you ping to another physical host (192.168.1.3) from a namespace
 $ ip netns exec blue ping 192.168.1.3
 Connect: Network is unreachable
 
 $ ip netns exec blue route
 
+- Add a Route  : physical host n/w - 192.168.1.0/24 , 192.168.15.5 ip address assigned to bridge n/w
 $ ip netns exec blue ip route add 192.168.1.0/24 via 192.168.15.5
 
 # Check the IP Address of the host
@@ -243,12 +245,14 @@ $ ip a
 
 $ ip netns exec blue ping 192.168.1.3
 PING 192.168.1.3 (192.168.1.3) 56(84) bytes of data.
+*** Does not work, since ns network is a private network and it is not routeable in the given infra network, hence we have to configure SNAT
 
 $ iptables -t nat -A POSTROUTING -s 192.168.15.0/24 -j MASQUERADE
 
 $ ip netns exec blue ping 192.168.1.3
 
 $ ip netns exec blue ping 8.8.8.8
+Fails, since there is no route to internet. Add a route to NS
 
 $ ip netns exec blue route
 
@@ -257,7 +261,9 @@ $ ip netns exec blue ip route add default via 192.168.15.5
 $ ip netns exec blue ping 8.8.8.8
 ```
 
-- Adding port forwarding rule to the iptables
+- Accessing the NS from external World.
+ External world does not have any information about the private network.
+ Adding port forwarding rule to the iptables on the host i.e any traffic coming to port 80 on the local host is to be forwarded to port 80 on the IP assigned to the blue namespace.
 
 ```
 $ iptables -t nat -A PREROUTING --dport 80 --to-destination 192.168.15.2:80 -j DNAT
