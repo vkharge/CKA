@@ -106,6 +106,8 @@ $ ip route add 10.244.2.2 via 192.168.1.12
 
 ![net-12](../../images/net12.PNG)
 
+ - Now that works for a small environment and in a simple network. But in larger environments with 100s of nodes in a cluster and 100s of PODs on each node, This is not practical. The routing table may not support so many entries and that is where you need to get creative and look for other solutions.
+
 ### Networking Model
 ![pod](../../images/pod.png)
 
