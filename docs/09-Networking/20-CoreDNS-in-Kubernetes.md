@@ -7,7 +7,7 @@ In this section, we will take a look at **CoreDNS in the Kubernetes**
 
 ## POD DNS Entry:
 	
-	 ![core1](../../images/core1.png)
+ ![core1](../../images/core1.png)
 
 
 ## CoreDNS
