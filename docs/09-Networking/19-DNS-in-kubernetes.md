@@ -4,6 +4,79 @@
 
 In this section, we will take a look at **DNS in the Kubernetes Cluster**
 
+
+## Cluster Setup
+
+  ![dns1](../../images/dns1.png)
+
+ - So we have a 3 node kubernetes cluster with some PODs and services deployed on them.
+
+ - Each node has a nodename and IP address assigned to it. The node names and IP addresses of the cluster are probably registered in a DNS server in your organization.
+
+ - Kubernetes deploys a built-in DNS server by default when you setup a cluster.
+
+    
+
+## POD and Service
+
+   ![dns2](../../images/dns2.png)
+ 
+ - I have a test pod on the left with the IP set to 10.244.1.5. And I have a web pod on the right, with the IP set to 10.244.2.5. Looking at their IPs, you can guess that they are probably hosted on two different nodes. 
+
+ - We assume that all PODs and services can reach other using their IP addresses.
+
+ - To make the web server accessible to the test pod, we create a service. We name it Web service and The service gets an IP 10.107.37.188
+
+ - Whenever a service is created, the kubernetes DNS service creates a record for the service. It maps the service name to the IP address. So within the cluster any pod can now reach the service using its service name.
+
+
+## POD and Service Communication in same NS
+
+  ![dns3](../../images/dns3.png)
+
+- In this case since the test pod and the web pod and its associated service are all in the same namespace. The default namespace. You were able to simply reach the web-service from the test pod using just the service name web service.
+
+
+## POD and Service Communication in different NS
+
+  ![dns4](../../images/dns4.png)
+
+ - Let's assume the web service was in a separate namespace named apps.
+
+ - Then to refer to it from the default namespace. you would have to say web-service.apps. The last name of the service is now the name of the namespace.
+
+
+
+## K8S DNS Table
+
+  ![dns5](../../images/dns5.png)
+
+ -  For each namespace the DNS server creates a subdomain with the name of namespace 
+ -  All the services under different NS are grouped together into another subdomain called SVC.
+
+ - So you can reach your application with the name web-service.apps.svc.
+
+ - Finally, all the services and PODs under different NS are grouped together into a root domain for the cluster, which is set to cluster.local by default. 
+
+ - So you can access the service using the URL web-service.apps.svc.cluster.local. That’s the fully qualified domain name for the service. 
+
+
+
+
+## Records for PODs are not created by default. But we can enable that explicitly:
+
+  ![dns6](../../images/dns6.png)
+
+ - Once enabled, Records are created for pods as well.
+
+ - It does not use the POD name though. For each POD kubernetes generates a name by replacing the dots in the IP address with dashes.
+
+ - The namespace remains the same and type is set to pod. The root domain is always cluster.local.
+
+  ![dns7](../../images/dns7.png)
+
+
+
 ## Pod DNS Record
 
 - The following DNS resolution:
