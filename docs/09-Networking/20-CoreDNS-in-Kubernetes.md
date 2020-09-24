@@ -5,6 +5,54 @@
 In this section, we will take a look at **CoreDNS in the Kubernetes**
 
 
+## POD DNS Entry:
+	
+	 ![core1](../../images/core1.png)
+
+
+## CoreDNS
+ 
+ - K8S deploys a DNS server within the cluster. With Kubernetes version 1.12 the recommended DNS server is CoreDNS. 
+
+ - The CoreDNS server is deployed as a POD in the kube-system namespace in the kubernetes cluster. Well they are deployed as two pods for redundancy, as part of a replicaset, they are actually a replicaset within a deployment
+
+  ![core2](../../images/core2.png)
+
+ - This POD runs the coreDNS executable, the same executable
+
+ - CoreDNS requires a configuration file. It uses a file named Corefile located at /etc/coredns. Within this file you have a number of plugins configured.
+
+ - The pods option you see here, is what is responsible for creating a record for PODs in the cluster.
+
+ - Any record that this Core DNS server can’t solve, for example say a POD tries to reach www.google.com it is forwarded to the nameserver specified in the coredns pods /etc/resolv.conf file. The /etc/resolv.conf file is set to use the nameserver from the kubernetes 
+
+ - This core file is passed into the pod has a configMap object. That way if you need to modify this configuration you can edit the ConfigMap object. 
+
+
+## DNS Server Address in POD:
+	
+![core3](../../images/core3.png)
+
+ - We now have the coredns pod up and running using the appropriate kubernetes plugin. It watches the kubernetes cluster for new PODs or services, and every time a pod or a service is created it adds a record for it in its database.
+
+ - What address do the PODs use to reach the DNS server? When we deploy CoreDNS solution, It also creates a service to make it available to other components within a cluster. The service is named as kube-dns by default. The IP address of this service is configured as nameserver on the PODs. The DNS configurations on PODs are done by kubernetes automatically when the PODs are created. 
+
+ - Want to guess which kubernetes component is responsible for that? The kubelet.
+
+   - If you look at the config file of the kubelet you will see the IP of the DNS server and domain in it. Once the pods are configured with the right nameserver, you can now resolve other pods and services.
+
+
+   - You can access the web-service using just web-service, or web-service.default or web-service.default.svc or web service.default.svc.cluster.local. 
+
+   ![core4](../../images/core4.png)
+   
+   - If you try to manually lookup the web-service using nslookup or the host command web-service command, it will return the fully qualified domain name of the web-service, which happens to be web-service.default.svc.cluster.local. The resolv.conf file also has a search entry which is set to default.svc.cluster.local  as well as svc.cluster.local and cluster.local. This allows you to find the service using any name. web-service or web-service.default or web-service.default.svc. 
+
+   ![core5](../../images/core5.png)
+   
+   - However, notice that it only has search entries for service . So you won’t be able to reach a pod the same way.
+
+
 ## To view the Pod
 
 ```
