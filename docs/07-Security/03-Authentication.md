@@ -7,6 +7,9 @@ In this section, we will take a look at authentication in a kubernetes cluster
 
   ![auth1](../../images/auth1.PNG)
   
+ - Throughout this section we will discuss how to secure our cluster by securing the communication between internal components and securing management access to the cluster through authentication and authorization mechanisms.
+ 
+ 
 #### Different users that may be accessing the cluster security of end users who access the applications deployed on the cluster is managed by the applications themselves internally.
 
  ![acc1](../../images/acc1.PNG)
