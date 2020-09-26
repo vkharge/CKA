@@ -68,6 +68,17 @@ In this section, we will take a look at TLS Basics
   ![cert6](../../images/cert6.PNG)
   
 
+## With asymmetric encryption, We have successfully transferred the symmetric keys from the user to the server
+  
+  - User/Browser has a private and public key
+  - Browser also has a public key of the website/server and server private is on the server itself
+
+  - How the symetric keys are successfully transfered?
+    - Browser encrypts the browser public key with the public key of the server
+    - It sends the data to the server 
+    - Server receives the data, to decrypt the data, server uses its private key and get the public key of the user/browser
+    -  With asymmetric encryption, We have successfully transferred the symmetric keys from the user to the server
+
 #### How do you look at a certificate and verify if it is legit?
 - who signed and issued the certificate.
 - If you generate the certificate then you will have it sign it by yourself, that is known as self-signed certificate.
