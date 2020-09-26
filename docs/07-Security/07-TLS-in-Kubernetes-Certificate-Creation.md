@@ -8,7 +8,7 @@ In this section, we will take a look at TLS certificate creation in kubernetes
 
 ## Certificate Authority (CA)
 
-- Generate Keys
+- Generate Private Keys
   ```
   $ openssl genrsa -out ca.key 2048
   ```
@@ -16,7 +16,7 @@ In this section, we will take a look at TLS certificate creation in kubernetes
   ```
   $ openssl req -new -key ca.key -subj "/CN=KUBERNETES-CA" -out ca.csr
   ```
-- Sign certificates
+- Self Sign certificates
   ```
   $ openssl x509 -req -in ca.csr -signkey ca.key -out ca.crt
   ```
