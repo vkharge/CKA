@@ -82,6 +82,7 @@ In this section, we will take a look at TLS Basics
 #### How do you look at a certificate and verify if it is legit?
 - who signed and issued the certificate.
 - If you generate the certificate then you will have it sign it by yourself, that is known as self-signed certificate.
+- All of the web browsers are built in with a Certificate validation mechanism, wherein the browser checks the certificate received from the server and validates it to make sure it is legitimate if it identifies it to be a fake certificate then it actually warns you.
 
   ![cert7](../../images/cert7.PNG)
   
