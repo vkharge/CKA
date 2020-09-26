@@ -89,6 +89,8 @@ In this section, we will take a look at TLS Basics
 #### How do you generate legitimate certificate? How do you get your certificates singed by someone with authority?
 - That's where **`Certificate Authority (CA)`** comes in for you. some of the popular ones are symantic, DigiCert, Comodo, GlobalSign etc.
 
+- The CA is themselves have a set of public and private key pairs. The CA is use their private keys to sign the certificates the public keys of all the CAs are built in to the browsers. The browser uses the public key of the CA to validate that the certificate was actually signed by the CA themselves.
+
   ![cert8](../../images/cert8.PNG)
   
   ![cert9](../../images/cert9.PNG)
@@ -96,8 +98,45 @@ In this section, we will take a look at TLS Basics
   ![cert10](../../images/cert10.PNG)
   
 ## Public Key Infrastructure
+ - For this the server first sends a certificate signing request to a CA.
+
+ - The CA uses its private key to sign the CSR.
+
+ - Remember all users have a copy of the CAs public key.
+
+ - The signed certificate is then sent back to the server the server configure is the web application with the signed certificate.
+
+- Whenever a user accesses the web application the server first sends the certificate with its public key.
+
+- The user or rather the user's browser reads the certificate and uses the CA's public key to validate and retrieve the servers Public key
+
+- It then generates a symmetric key that it wishes to use going forward for all communication.
+
+- The symmetric key is encrypted using the server as public key and sent back to the server
+
+- The server uses its private key to decrypt the message and retrieve the symmetric key.   
    
    ![pki](../../images/pki.PNG)
+   
+- administrator generates a key pair for securing SSH
+
+- the web server generates a key pair for securing the web site with HTTPS
+
+- the Certificate Authority generates its own set of key pair to sign certificates.
+
+- The end user though only generates a single symmetric key.
+
+- Once he establishes trust with the Web site he uses his username and password to authenticate the Web server with the servers key pairs.
+
+- The client was able to validate that the server is who they say they are but the server does not for sure know if the client is who they say they are.
+
+- So what can the server do to validate that the client is who they say they are for this as part of the initial trust building exercise.
+
+- The server can request a certificate from the client and so the client must generate a pair of keys and a signed certificate from a valid CA, the client then sends the certificate to the server for it to verify that the client is who they say they are.
+
+- Now you must be thinking you have never generated a client's certificate to access a Web site.? Well that's because TLS client certificates are not generally implemented on web servers
+
+- the process of generating, distributing and maintaining digital certificates is known as public key infrastructure or PKI 
    
 ## Certificates naming convention
 
