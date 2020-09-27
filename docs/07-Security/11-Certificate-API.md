@@ -6,6 +6,60 @@ In this section, we will take a look at how to manage certificates and certifica
 ## CA (Certificate Authority)
 - The CA is really just the pair of key and certificate files that we have generated, whoever gains access to these pair of files can sign any certificate for the kubernetes environment.
 
+
+
+- All the certificates are stored in Master Server, So the master node is also our CA server. 
+
+- Consider new administrator joins the team:
+	
+	- New User generates his key and CSR
+	- Sends the CSR to existing Admin
+	- Admin Logins into the Master Node
+	- Signs the CSR with the Root CA Certificate
+	- Admin get the user.crt from the Master download
+	- Admin forwards the user.crt to the new user
+	- Now new user is able to access the K8S
+
+
+	** The same process happens when the user certificate expires
+
+
+- This is not recommended, Kubernetes has a built-in Certificates API that can do this for you. With the Certificates API, you now send a CertificateSigningRequest directly to kubernetes through an API call
+	- New User generates his key and CSR
+      - # openssl genrsa -out vk.key 2048
+      - # openssl req -new -key vk.key -subj "/CN=vk" -out vk.csr 
+
+
+	- Sends the CSR to existing Admin
+
+	- Instead of login into Master Node, the admin calls/creates the CertificateSigningRequest Object
+      - CSR Object is created using a manifest file
+      - CSR Object requires the certificate in base64 format
+      - # cat vk.csr  | base64
+
+      - # kubectl create -f CSR.yaml
+
+	- Request can be reviewed or approved by the admin using the kubeclt commands
+	  - # kubectl get csr
+	  - # kubectl certificate approve vk
+
+	  - ** K8S signs the certificate with CA key pairs and generates a certificate for the user.
+
+
+	- Once approved, this certificate can be extracted and send back to user
+	  - # kubectl get csr vk -o yaml
+	  - Look for status -> certificate , this certificate in base64 encoded format
+
+	  - copy the certificate, # echo "<certificate contents>" | base64 --decode
+
+
+	- Which kubernetes component is responsible for revewing and signing the certificate ?
+	  - Controller-Manager is responsible for this.
+	  - Contreoller-Manager has CSR-Aproving and CSR-Signing controllers in it
+
+	  - Since the Controller-Manager performs the approving and signing of CSR, in its config, it has the CA Key and CA Cert
+
+
 #### Kubernetes has a built-in certificates API that can do this for you. 
 - With the certificate API, we now send a certificate signing request (CSR) directly to kubernetes through an API call.
    
