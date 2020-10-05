@@ -57,9 +57,9 @@
   $ kubectl create -f policy-defination.yaml
   ```
   
-  ![npol3](../../images/npol3.PNG)
+  ![npol3](../../images/npol3.png)
  
-  ![npol4](../../images/npol4.PNG)
+  ![npol4](../../images/npol4.png)
   
 ## Note
  
