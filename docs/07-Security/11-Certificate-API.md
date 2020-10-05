@@ -60,6 +60,35 @@ In this section, we will take a look at how to manage certificates and certifica
 	  - Since the Controller-Manager performs the approving and signing of CSR, in its config, it has the CA Key and CA Cert
 
 
+### Once the user csr is approved, how the user can access the cluster
+ 
+ - As the CSR is approved, now the user has vk.key , vk.crt [converting the approved csr to crt], and ca.crt
+ - Create a kubeconfig file
+   
+   ```
+   # kubectl config view
+   # kubectl config --kubeconfig=config set-cluster la-cluster --server=https://172.31.9.81:6443  --certificate-authority /home/cloud_user/ca.crt
+   
+   # kubectl config --kubeconfig=config set-credentials vk --client-certificate /home/cloud_user/vk.crt  --client-key /home/cloud_user/vk.key
+   
+   # kubectl config --kubeconfig=config set-context vk-la --user=vk --cluster=la-cluster --namespace=default
+   
+   # kubectl config view --kubeconfig=config
+   
+   # kubectl get no --kubeconfig=config --context vk-la
+   Error from server (Forbidden): nodes is forbidden: User "vk" cannot list resource "nodes" in API group "" at the cluster scope
+   ** New user does not have any permission on the cluster
+   
+   Default Context
+   # kubectl config --kubeconfig=config use-context vk-la
+   
+   # kubectl get no --kubeconfig=config
+   
+   Copy the config file ~/.kube/config to make kubeconfig file as a default file
+   
+   # kubectl get no
+  
+
 #### Kubernetes has a built-in certificates API that can do this for you. 
 - With the certificate API, we now send a certificate signing request (CSR) directly to kubernetes through an API call.
    
